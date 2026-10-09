@@ -1,14 +1,14 @@
 "use strict";
 
 const PRODUCTOS_INICIALES = [
-  { id: 1, nombre: "Nike Air Max Pulse", precio: 2500, imagen: "https://unsplash.com", categoria: "Running", descripcion: "Amortiguación suave para tu ritmo diario.", etiqueta: "MÁS VENDIDO" },
-  { id: 2, nombre: "Jordan Street One", precio: 3200, imagen: "https://unsplash.com", categoria: "Lifestyle", descripcion: "Un clásico urbano con mucha personalidad.", etiqueta: "FAVORITO" },
-  { id: 3, nombre: "Revolution Runner", precio: 1900, imagen: "https://unsplash.com", categoria: "Running", descripcion: "Ligereza y soporte para sumar kilómetros.", etiqueta: "NUEVO" },
-  { id: 4, nombre: "Adidas Street Flex", precio: 2100, imagen: "https://unsplash.com", categoria: "Lifestyle", descripcion: "Comodidad versátil, de la mañana a la noche." },
-  { id: 5, nombre: "Puma Pace Pro", precio: 1900, imagen: "https://unsplash.com", categoria: "Training", descripcion: "Estabilidad y agarre para cada entrenamiento." },
-  { id: 6, nombre: "New Balance Everyday", precio: 2600, imagen: "https://unsplash.com", categoria: "Lifestyle", descripcion: "Un perfil atemporal para todos tus planes." },
-  { id: 7, nombre: "Cloud Walk Lite", precio: 2300, imagen: "https://unsplash.com", categoria: "Running", descripcion: "Sensación ligera desde el primer paso." },
-  { id: 8, nombre: "Court Classic", precio: 1800, imagen: "https://unsplash.com", categoria: "Training", descripcion: "Diseño limpio para moverte a tu manera.", etiqueta: "ESENCIAL" }
+  { id: 1, nombre: "Nike Air Max Pulse", precio: 2500, imagen: "images/Nike-air-max.jpg", categoria: "Running", descripcion: "..." }, // Revisa si el archivo se llama exactamente así
+  { id: 2, nombre: "Jordan Street One", precio: 3200, imagen: "images/nike1.jpg", categoria: "Lifestyle", descripcion: "..." },
+  { id: 3, nombre: "Revolution Runner", precio: 1900, imagen: "images/nike2.jpg", categoria: "Running", descripcion: "..." },
+  { id: 4, nombre: "Adidas Street Flex", precio: 2100, imagen: "images/adidas1.jpg", categoria: "Lifestyle", descripcion: "..." },
+  { id: 5, nombre: "Puma Pace Pro", precio: 1900, imagen: "images/puma.jpg", categoria: "Training", descripcion: "..." },
+  { id: 6, nombre: "New Balance Everyday", precio: 2600, imagen: "images/nike4.jpeg", categoria: "Lifestyle", descripcion: "..." }, // Ojo si es .jpeg
+  { id: 7, nombre: "Cloud Walk Lite", precio: 2300, imagen: "images/adidas1.jpg", categoria: "Running", descripcion: "..." },
+  { id: 8, nombre: "Court Classic", precio: 1800, imagen: "images/puma.jpg", categoria: "Training", descripcion: "..." }
 ];
 
 const leerJSON = (clave, alternativa) => {
