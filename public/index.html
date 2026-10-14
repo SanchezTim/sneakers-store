@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sneakers Store | Proyecto TSPW</title>
+  <link href="https://googleapis.com" rel="stylesheet">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/tienda.css">
+  <script src="https://cloudflare.com"></script>
+</head>
+<body>
+
+  <div class="announcement">
+    Envío gratis en compras mayores a <span>$4,500 MXN</span> • 🔥 Aprovecha 3 y 6 Meses sin Intereses
+  </div>
+
+  <header class="site-header">
+    <a href="#" class="brand" onclick="cambiarVista('inicio')">
+      <div class="brand-mark">👟</div>
+      <span>SNEAKERS<span class="brand-light">STORE</span></span>
+    </a>
+    
+    <button class="menu-toggle" id="menuToggleBtn" aria-label="Abrir menú">
+      ☰
+    </button>
+    
+    <nav class="main-nav" id="mainNav">
+      <button class="nav-btn active" onclick="cerrarMenuMovil('inicio')">Inicio</button>
+      <button class="nav-btn" onclick="cerrarMenuMovil('productos')">Catálogo</button>
+      <button class="nav-btn" onclick="cerrarMenuMovil('contacto')">Contacto</button>
+      <button class="nav-btn" id="menuLoginBtn" onclick="cerrarMenuMovil('login')">Iniciar Sesión 👤</button>
+    </nav>
+
+    <div class="header-actions">
+      <button class="icon-button" onclick="cambiarVista('carrito')">
+        🛒 <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    
+    <!-- 1. VISTA DE INICIO -->
+    <section id="inicio" class="view">
+      <div class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow"><i></i> NUEVA COLECCIÓN DE TEMPORADA</div>
+          <h1>Encuentra tu estilo <em>urbano</em></h1>
+          <p>Modelos exclusivos directos de distribuidores autorizados. Calidad garantizada al 100% para tus pasos diarios.</p>
+          <button class="btn-add-to-cart" style="max-width:200px;" onclick="cambiarVista('productos')">Comprar Ahora ↗</button>
+        </div>
+                <!-- CONTENEDOR HERO DERECHO: TARJETA INTERACTIVA DE COMPRA DIRECTA -->
+        <div class="hero-image">
+          <div class="hero-featured-card">
+            <span class="hot-release-tag">HOT RELEASE</span>
+            <h2>Air Max Pulse 90</h2>
+            <p>Edición especial con amortiguación premium optimizada para el asfalto urbano.</p>
+            <button class="btn-buy-now-hero" onclick="agregar(3)">
+              Llevartelos ya ↗
+            </button>
+          </div>
+          <div class="hero-shoe-render">
+            <img src="images/Nike air max.jpg" alt="Air Max Pulse 90 Masters">
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 2. VISTA DEL CATÁLOGO -->
+    <section id="productos" class="view" hidden>
+      <div style="max-width:1200px; margin:30px auto; padding:0 16px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; flex-wrap:wrap; gap:16px;">
+          <h2>Nuestro Catálogo (<span id="resultCount">0 modelos</span>)</h2>
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <input type="text" placeholder="Buscar par..." oninput="buscar(this.value)" style="padding:10px 14px; border:1px solid var(--line); border-radius:8px; font-size:13px;">
+            <select onchange="ordenarProductos(this.value)" style="padding:10px; border:1px solid var(--line); border-radius:8px; font-size:13px;">
+              <option value="featured">Destacados</option>
+              <option value="low">Precio: Menor a Mayor</option>
+              <option value="high">Precio: Mayor a Menor</option>
+              <option value="name">Orden Alfabético</option>
+            </select>
+          </div>
+        </div>
+        <div class="product-grid" id="listaProductos"></div>
+      </div>
+    </section>
+
+    <!-- 3. VISTA DE CONTACTO -->
+    <section id="contacto" class="view" hidden>
+      <div style="max-width:550px; margin:50px auto; background:white; padding:32px; border-radius:16px; border:1px solid var(--line); box-shadow:var(--shadow);">
+        <h2 style="margin-top:0;">Escríbenos un mensaje</h2>
+        <form onsubmit="event.preventDefault(); alert('¡Mensaje enviado con éxito!'); this.reset();">
+          <input type="text" placeholder="Nombre completo" required style="width:100%; padding:12px; margin-bottom:12px; border:1px solid var(--line); border-radius:8px;">
+          <input type="email" placeholder="Correo electrónico" required style="width:100%; padding:12px; margin-bottom:12px; border:1px solid var(--line); border-radius:8px;">
+          <textarea placeholder="¿En qué podemos ayudarte?" required rows="4" style="width:100%; padding:12px; margin-bottom:16px; border:1px solid var(--line); border-radius:8px; resize:none;"></textarea>
+          <button type="submit" class="btn-add-to-cart">Enviar Formulario ✉️</button>
+        </form>
+      </div>
+    </section>
+    <!-- 4. VISTA DE INICIO DE SESIÓN -->
+    <section id="login" class="view" hidden>
+      <div style="max-width:400px; margin:60px auto; background:white; padding:36px; border-radius:16px; border:1px solid var(--line); box-shadow:var(--shadow);">
+        <h2 style="margin-top:0; text-align:center;">Iniciar Sesión</h2>
+        <form onsubmit="procesarLoginForm(event)">
+          <div style="margin-bottom:14px;">
+            <label style="display:block; font-size:11px; font-weight:700; margin-bottom:6px; color:var(--muted);">USUARIO / CORREO</label>
+            <input type="text" id="loginUsername" placeholder="Usuario o correo@ejemplo.com" required style="width:100%; padding:12px; border:1px solid var(--line); border-radius:8px;">
+          </div>
+          <div style="margin-bottom:20px;">
+            <label style="display:block; font-size:11px; font-weight:700; margin-bottom:6px; color:var(--muted);">CONTRASEÑA</label>
+            <input type="password" id="loginPassword" placeholder="Ingresa tu contraseña" required style="width:100%; padding:12px; border:1px solid var(--line); border-radius:8px;">
+          </div>
+          <button type="submit" class="btn-add-to-cart" style="margin-bottom:16px;">Ingresar a la tienda 👟</button>
+        </form>
+        <p style="text-align:center; font-size:13px; margin:0;">¿No tienes una cuenta? <a href="#" onclick="cambiarVista('registro')" style="color:var(--orange); font-weight:700; text-decoration:none;">Regístrate aquí</a></p>
+      </div>
+    </section>
+
+    <!-- 5. VISTA DE REGISTRO -->
+    <section id="registro" class="view" hidden>
+      <div style="max-width:400px; margin:60px auto; background:white; padding:36px; border-radius:16px; border:1px solid var(--line); box-shadow:var(--shadow);">
+        <h2 style="margin-top:0; text-align:center;">Crear Cuenta</h2>
+        <form onsubmit="procesarRegistroForm(event)">
+          <div style="margin-bottom:12px;">
+            <label style="display:block; font-size:11px; font-weight:700; margin-bottom:4px; color:var(--muted);">NOMBRE COMPLETO</label>
+            <input type="text" id="registroNombre" placeholder="Tu nombre real" required style="width:100%; padding:12px; border:1px solid var(--line); border-radius:8px;">
+          </div>
+          <div style="margin-bottom:12px;">
+            <label style="display:block; font-size:11px; font-weight:700; margin-bottom:4px; color:var(--muted);">CORREO ELECTRÓNICO</label>
+            <input type="email" id="registroEmail" placeholder="correo@ejemplo.com" required style="width:100%; padding:12px; border:1px solid var(--line); border-radius:8px;">
+          </div>
+          <div style="margin-bottom:20px;">
+            <label style="display:block; font-size:11px; font-weight:700; margin-bottom:4px; color:var(--muted);">CONTRASEÑA SEGURA</label>
+            <input type="password" id="registroPassword" placeholder="Crea una clave" required style="width:100%; padding:12px; border:1px solid var(--line); border-radius:8px;">
+          </div>
+          <button type="submit" class="btn-add-to-cart" style="margin-bottom:16px;">Crear mi cuenta ↗</button>
+        </form>
+        <p style="text-align:center; font-size:13px; margin:0;">¿Ya tienes una cuenta? <a href="#" onclick="cambiarVista('login')" style="color:var(--orange); font-weight:700; text-decoration:none;">Inicia sesión aquí</a></p>
+      </div>
+    </section>
+
+    <!-- 6. VISTA DEL CARRITO CORREGIDA -->
+    <section id="carrito" class="view" hidden>
+      <div style="max-width:1100px; margin:30px auto; padding:0 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <h2 style="margin:0;">Tu Carrito de Compras</h2>
+          <button onclick="cambiarVista('productos')" style="background: none; border: 1px solid var(--ink); padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer;">
+            ← Seguir Comprando
+          </button>
+        </div>
+        <div class="cart-container-layout">
+          <!-- Aquí removemos los estilos en línea rígidos viejos para que tienda.css tome el control global -->
+          <ul class="cart-main-content" id="listaCarrito"></ul>
+          <div class="cart-sidebar-summary" id="resumenCarrito"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. PANTALLA DE CHECKOUT -->
+    <section id="checkout" class="view" hidden>
+      <div style="max-width:900px; margin:40px auto; padding:0 16px; display:grid; grid-template-columns:1fr 380px; gap:32px;">
+        <div style="background:white; padding:24px; border-radius:12px; border:1px solid var(--line);">
+          <h3 style="margin-top:0; color:#009ee3;">Mercado Pago Transacción Segura</h3>
+          <form onsubmit="procesarPagoFinal(event)">
+            <input type="text" placeholder="Nombre del titular" required style="width:100%; padding:12px; margin-bottom:12px; border:1px solid #ddd; border-radius:8px;">
+            <input type="text" placeholder="Número de Tarjeta" required style="width:100%; padding:12px; margin-bottom:12px; border:1px solid #ddd; border-radius:8px;">
+             <div style="display:flex; gap:16px; margin-bottom:16px; width:100%;">
+            <input type="text" placeholder="MM/AA" required style="width:50%; padding:12px; border:1px solid #ddd; border-radius:8px;">
+            <input type="text" placeholder="CVV" maxlength="3" oninput="this.value = this.value.replace(/\D/g, '')" required style="width:50%; padding:12px; border:1px solid #ddd; border-radius:8px;">
+          </div>
+
+            <button type="submit" style="width:100%; background:#009ee3; color:white; border:none; padding:14px; border-radius:8px; font-weight:800;">Concluir Pago y Descargar Factura 📄</button>
+          </form>
+        </div>
+
+        <div style="background:white; border:1px dashed #999; padding:24px; font-family:'Courier New', monospace; font-size:12px;" id="ticketImprimible">
+          <div style="text-align:center; margin-bottom:16px;">
+            <h3 style="margin:0;">SNEAKERS STORE S.A.</h3>
+            <p id="ticketFecha">Fecha: --/--/----</p>
+            <p style="margin:0;">RFC: SST-092312-TSP</p>
+          </div>
+          <hr style="border:0; border-top:1px dashed #333; margin-bottom:12px;">
+          <div id="ticketProductosListado" style="min-height:60px;"></div>
+          <hr style="border:0; border-top:1px dashed #333; margin:12px 0;">
+          <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:800;">
+            <span>TOTAL PAGADO:</span>
+            <span id="ticketTotalMonto">$0.00 MXN</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="compraExitosa" class="view" hidden>
+      <div style="text-align:center; max-width:500px; margin:80px auto; background:white; padding:40px; border-radius:16px; border:1px solid var(--line);">
+        <div style="font-size:64px; margin-bottom:16px;">🎉</div>
+        <h2 style="color:var(--green);">¡Transacción Completada!</h2>
+        <p>Tu archivo de comprobante de compra PDF se ha descargado.</p>
+        <button class="btn-add-to-cart" onclick="cambiarVista('productos')">Seguir comprando 👟</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- INTERFAZ OPTIMIZADA DEL CHATBOT DE ASISTENCIA -->
+  <div class="chatbot-global-wrapper">
+    <button class="chatbot-toggle-trigger" onclick="alternarChatbot()">💬</button>
+    <div class="chatbot-window" id="chatbotWindow">
+      <div class="chatbot-header">
+        <div class="chatbot-profile">
+          <span style="font-size:18px;">🤖</span>
+          <div>
+            <h3>Soporte Sneaker Store</h3>
+            <span class="chatbot-status">● En Línea</span>
+          </div>
+        </div>
+        <button class="chatbot-close-x" onclick="alternarChatbot()">✕</button>
+      </div>
+      <div class="chatbot-body">
+        <div class="chat-msg bot"><p>¡Hola! ¿En qué puedo ayudarte hoy?</p></div>
+        <div class="chatbot-options-grid">
+          <button onclick="responderChatbot('¿Cuáles son los horarios de atención?')">⏱️ Horarios de atención</button>
+          <button onclick="responderChatbot('¿Cuáles son los tiempos y costos de envío?')">🚚 Tiempos y costos de envío</button>
+          <button onclick="responderChatbot('¿Cómo funcionan los Cambios y Devoluciones?')">🔄 Cambios y Devoluciones</button>
+          <button onclick="responderChatbot('¿Son productos originales?')">💯 ¿Son productos originales?</button>
+          <button onclick="responderChatbot('¿Cuál es el Estado de mi pedido?')">🔍 Estado de mi pedido</button>
+          <button onclick="responderChatbot('Quiero Hablar con un asesor humano')">👤 Hablar con un asesor humano</button>
+        </div>
+        <!-- Aquí removemos el inline style rígido viejo para el contenedor asíncrono -->
+        <div id="chatRespuestasContenedor"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/tienda.js"></script>
+</body>
+</html>

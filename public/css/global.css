@@ -1,0 +1,313 @@
+:root {
+  --orange: #f36b21;
+  --orange-dark: #d95510;
+  --ink: #20201e;
+  --muted: #777773;
+  --paper: #f7f6f2;
+  --line: #e9e7e1;
+  --white: #fff;
+  --green: #34835c;
+  --radius: 18px;
+  --shadow: 0 18px 50px #30281b12;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+
+.site-header {
+  min-height: 78px;
+  padding: 12px clamp(16px, 4vw, 94px);
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid #00000008;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--ink);
+  font: 800 14px 'Manrope', sans-serif;
+  letter-spacing: .09em;
+}
+
+.brand-mark {
+  height: 34px;
+  width: 34px;
+  display: grid;
+  place-items: center;
+  background: var(--orange);
+  color: white;
+  border-radius: 50% 50% 50% 12px;
+  font: 800 19px 'Manrope', sans-serif;
+}
+
+.main-nav { display: flex; align-items: center; gap: 8px; }
+
+.nav-btn {
+  border: 0;
+  background: transparent;
+  color: #666;
+  padding: 11px 14px;
+  border-radius: 24px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: .2s;
+}
+
+.nav-btn:hover, .nav-btn.active {
+  background: #fff2e9;
+  color: var(--orange-dark);
+}
+
+.header-actions { display: flex; align-items: center; gap: 16px; }
+
+.icon-button {
+  border: 0;
+  background: transparent;
+  font-size: 24px;
+  color: var(--ink);
+  position: relative;
+}
+
+.cart-count {
+  position: absolute;
+  top: -2px;
+  right: -6px;
+  background: var(--orange);
+  color: #fff;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 20px;
+  font-size: 10px;
+  display: grid;
+  place-items: center;
+}
+
+.view[hidden] { display: none !important; }
+
+/* CHATBOT GLOBAL */
+.chatbot-global-wrapper { position: fixed; bottom: 24px; right: 24px; z-index: 999999; }
+
+.chatbot-toggle-trigger {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #ffffff;
+  border: none;
+  font-size: 24px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chatbot-window {
+  position: absolute;
+  bottom: 72px;
+  right: 0;
+  width: 360px;
+  height: 480px;
+  background: var(--white);
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chatbot-header {
+  background: var(--ink);
+  color: #ffffff;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chatbot-close-x {
+  background: transparent !important;
+  color: #ffffff !important;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  transition: opacity 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chatbot-close-x:hover {
+  opacity: 0.7;
+}
+
+.chatbot-body { flex: 1; padding: 16px; background: #fcfcfb; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+.chat-msg { max-width: 85%; padding: 10px 14px; border-radius: 12px; font-size: 13px; }
+.chat-msg.user { background: var(--orange); color: #ffffff; align-self: flex-end; border-radius: 12px 12px 2px 12px; }
+.chat-msg.bot { background: #e6f4ff; color: #0050b3; align-self: flex-start; border-radius: 2px 12px 12px 12px; }
+.chatbot-options-grid { display: flex; flex-direction: column; gap: 6px; }
+.chatbot-options-grid button { background: white; border: 1px solid var(--line); padding: 8px 12px; border-radius: 8px; text-align: left; font-size: 12px; }
+.chatbot-footer { padding: 12px; display: flex; gap: 8px; background: white; border-top: 1px solid var(--line); }
+.chatbot-footer input { flex: 1; padding: 10px; border: 1px solid var(--line); border-radius: 6px; }
+.btn-chat-send { background: var(--ink); color: white; border: none; padding: 0 16px; border-radius: 6px; }
+
+/* Inicialización global del botón de menú (Oculto en computadoras) */
+.menu-toggle {
+  display: none;
+}
+/* ==========================================================================
+   OPTIMIZACIÓN RESPONSIVA Y ESTÉTICA MÓVIL (PANTALLAS CELULARES)
+   ========================================================================== */
+@media (max-width: 768px) {
+  
+  .menu-toggle {
+    display: block !important;
+    background: transparent !important;
+    border: none !important;
+    font-size: 28px !important;
+    color: var(--ink) !important;
+    cursor: pointer !important;
+    order: 2 !important;
+    padding: 4px 8px !important;
+  }
+
+  /* 2. Reacomodar el Header en móviles */
+  .site-header {
+    padding: 12px 16px !important;
+    position: relative !important;
+  }
+
+  .header-actions {
+    order: 3 !important;
+    margin-left: auto !important;
+  }
+
+  /* 3. Transformar el menú estirado en una lista desplegable oculta */
+  .main-nav {
+    display: none !important; /* Oculto por defecto */
+    flex-direction: column !important;
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    width: 100% !important;
+    background: #ffffff !important;
+    padding: 16px !important;
+    border-bottom: 2px solid var(--line) !important;
+    gap: 10px !important;
+    z-index: 99999 !important;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05) !important;
+  }
+
+  /* Clase que activa el JavaScript al presionar la hamburguesa */
+  .main-nav.open {
+    display: flex !important;
+  }
+
+  .nav-btn {
+    width: 100% !important;
+    text-align: left !important;
+    border-radius: 8px !important;
+    padding: 12px 16px !important;
+  }
+
+  /* 4. Encoger el Chatbot para que no sature pantallas WVGA / Móviles */
+  .chatbot-window {
+    width: calc(100vw - 40px) !important;
+    max-width: 340px !important;
+    height: 420px !important;
+    right: -10px !important;
+    bottom: 64px !important;
+  }
+  
+  .chatbot-options-grid button {
+    padding: 6px 10px !important;
+    font-size: 11px !important;
+  }
+
+    /* ==========================================================
+     OPTIMIZACIÓN ULTRA-ESTÉTICA PARA EL CARRITO EN CELULARES
+     ========================================================== */
+  .cart-container-layout {
+    grid-template-columns: 1fr !important; /* Cambia a una sola columna vertical */
+    gap: 20px !important;
+    width: 100% !important;
+  }
+
+  .cart-sidebar-summary {
+    position: static !important; /* Desactiva el modo fijo lateral */
+    width: 100% !important;
+    margin-top: 10px !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.02) !important;
+  }
+
+}
+
+/* ==========================================================================
+   REFINAMIENTO ESTÉTICO ULTRA-FINO PARA EL SOPORTE CHATBOT
+   ========================================================================== */
+.chatbot-body {
+  padding: 12px !important;
+}
+
+.chat-msg {
+  max-width: 88% !important;
+  padding: 8px 12px !important;
+  font-size: 12px !important; 
+  line-height: 1.35 !important;
+  margin-bottom: 4px !important;
+  font-family: 'DM Sans', sans-serif !important;
+}
+
+.chat-msg p {
+  margin: 0 !important; /* Elimina márgenes internos innecesarios que inflaban la burbuja */
+}
+
+/* Encoger ligeramente los botones de preguntas para que queden balanceados */
+.chatbot-options-grid {
+  gap: 4px !important;
+}
+
+.chatbot-options-grid button {
+  padding: 6px 10px !important;
+  font-size: 11px !important;
+  border-radius: 6px !important;
+}
+
+.chatbot-header {
+  padding: 8px 12px !important; 
+  min-height: auto !important;
+}
+
+.chatbot-header h3 {
+  font-size: 13px !important; 
+  margin: 0 !important;
+}
+
+.chatbot-profile {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
